@@ -38,21 +38,17 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  }
  
  function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-    //let documentToModify = document;
-    //let itemsList = list;
-    //let pilotName = pilot;
-    //let copilotName = copilot;
-    //let fuelLevelTwo = fuelLevel;
-    //let cargoLevelTwo = cargoLevel;
-    //let isReady = false;
 
     if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty") {
         alert("All fields are required!");
+        Event.preventDefault();
         //do I need to do something else?
         //Below might not be able to be an else if statement, or should be nested?
     } else if (validateInput(pilot) !== "Not a Number" || validateInput(copilot) !== "Not a Number" || validateInput(fuelLevel) !== "Is a Number" || validateInput(cargoLevel) !== "Is a Number") {
-        alert("Make sure to enter valid information for each field!");
-          //do I need to do something else?
+        window.alert("Make sure to enter valid information for each field!");
+        Event.preventDefault();
+        //IDK if I need the window. part  
+        //do I need to do something else? event.preventDefault(); Or does that go in script.js?
     }
 
     //do I need to declare list to be document.getElementById("faultyItems");?
@@ -62,41 +58,35 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     let launchStatus = document.getElementById("launchStatus");
     let fuelNum = Number(fuelLevel);
     let cargoNum = Number(cargoLevel);
+    let fuelStatus = document.getElementById("fuelStatus");
+    let cargoStatus = document.getElementById("cargoStatus");
 
-    //using template literals, update li #pilotStatus and #copilotStatus to include pilot and co-pilot's names
-    //Do I need to be more specific with syntax here?
+    //Ensures passing defaults - could be refactored to use "list" argument
     pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
     copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
+    fuelStatus.innerHTML = "Fuel level high enough for launch";
+    cargoStatus.innerHTML = "Cargo mass low enough for launch";
 
-    //if fuel level <10,000, set faultyItems to visible with status stating not enough fuel
-    //And h2 launchStatus changes to "Shuttle not ready for launch", color change to red
+    //Shuttle Requirement Checks
     if (fuelNum < 10000) {
-        let fuelStatus = document.getElementById("fuelStatus");
         fuelStatus.innerHTML = "Fuel level too low for launch";
         launchStatus.innerHTML = "Shuttle Not Ready for Launch";
         launchStatus.style.color = "red";
         listVisibility.style.visibility = "visible";
     }
-    //if cargo mass >10,000, change list to visible, cargoStatus to too much mass
-    //And launchStatus changes to "Shuttle not ready for launch", color change to red
+        
     if (cargoNum > 10000) {
-        let cargoStatus = document.getElementById("cargoStatus");
         cargoStatus.innerHTML = "Cargo mass too heavy for launch";
         launchStatus.innerHTML = "Shuttle Not Ready for Launch";
         launchStatus.style.color = "red";
         listVisibility.style.visibility = "visible";
     }
 
-    else if (typeof pilot === "string" && typeof copilot === "string" && fuelNum >= 10000 && cargoNum <= 10000) {
+    if (typeof pilot === "string" && typeof copilot === "string" && fuelNum >= 10000 && cargoNum <= 10000) {
         launchStatus.innerHTML = "Shuttle is Ready for Launch";
         launchStatus.style.color = "green";
     }
-    //div id faultyItems updated if something not ready
 
-    //if shuttle is ready, change text of launchStatus to green and display "Shuttle is ready for launch"
-
-
-    return;
  }
  
  async function myFetch() {
