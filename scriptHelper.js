@@ -1,9 +1,9 @@
 // Write your helper functions here!
 
-require('cross-fetch/polyfill');
+//require('cross-fetch/polyfill');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-    let missionTarget = document.getElementById("missiontarget")
+    let missionTarget = document.getElementById("missionTarget")
     missionTarget.innerHTML = `
                 <h2>Mission Destination</h2>
                    <ol>
@@ -66,7 +66,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     //do I need to declare list to be document.getElementById("faultyItems");?
     let pilotStatus = document.getElementById("pilotStatus");
     let copilotStatus = document.getElementById("copilotStatus");
-    let listVisibility = document.getElementById("faultyItems");
+    let listVisibility = list;//document.getElementById("faultyItems")
     let launchStatus = document.getElementById("launchStatus");
     let fuelNum = Number(fuelLevel);
     let cargoNum = Number(cargoLevel);
