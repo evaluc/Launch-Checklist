@@ -16,38 +16,38 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                    <img src="${imageUrl}">`
  }
  
+ 
  function validateInput(testInput) {
     let input = testInput;
     let response = "";
 
-    if (input === "") {
+    if (String(input) === "") {
         response = "Empty";
     }
 
-    if (isNaN(input)) {
+    if (isNaN(Number(input))) {
         response = "Not a Number";
     }
     
     if (isNaN(Number(input)) === false && input !== "") {
         response = "Is a Number";
-        //Should we also check if it's a number >= 0? Don't want negative mass or negative fuel levels working
+        //Here would be a good spot to potentially add a check if the number is >=0
     }
 
     return response;
  }
  
+ //TODO Refactor formSubmission
  function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty") {
         alert("All fields are required!");
-        //event.preventDefault();
+       
         //do I need to do something else?
         //Below might not be able to be an else if statement, or should be nested?
     } else if (validateInput(pilot) !== "Not a Number" || validateInput(copilot) !== "Not a Number" || validateInput(fuelLevel) !== "Is a Number" || validateInput(cargoLevel) !== "Is a Number") {
         alert("Make sure to enter valid information for each field!");
-        //event.preventDefault();
-        //IDK if I need the window. part  
-        //do I need to do something else? event.preventDefault(); Or does that go in script.js?
+       
     }
 
     //do I need to declare list to be document.getElementById("faultyItems"); here when doing so in script.js?
@@ -61,6 +61,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     let cargoStatus = document.getElementById("cargoStatus");
 
     //Ensures passing defaults - could be refactored to use "list" argument
+    //Need to prevent saying pilot/copilot reday if empty strings
     pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
     copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
     fuelStatus.innerHTML = "Fuel level high enough for launch";
