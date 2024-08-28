@@ -1,6 +1,6 @@
 // Write your helper functions here!
 
-//require('cross-fetch/polyfill');
+require('cross-fetch/polyfill');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     let missionTarget = document.getElementById("missionTarget")
@@ -14,19 +14,6 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                      <li>Number of Moons: ${moons}</li>
                    </ol>
                    <img src="${imageUrl}">`
-    
-    // Here is the HTML formatting for our mission target div.
-    /*
-                 <h2>Mission Destination</h2>
-                 <ol>
-                     <li>Name: </li>
-                     <li>Diameter: </li>
-                     <li>Star: ${star}</li>
-                     <li>Distance from Earth: </li>
-                     <li>Number of Moons: </li>
-                 </ol>
-                 <img src="">
-    */
  }
  
  function validateInput(testInput) {
@@ -53,17 +40,17 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
 
     if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty") {
         alert("All fields are required!");
-        Event.preventDefault();
+        //event.preventDefault();
         //do I need to do something else?
         //Below might not be able to be an else if statement, or should be nested?
     } else if (validateInput(pilot) !== "Not a Number" || validateInput(copilot) !== "Not a Number" || validateInput(fuelLevel) !== "Is a Number" || validateInput(cargoLevel) !== "Is a Number") {
-        window.alert("Make sure to enter valid information for each field!");
-        Event.preventDefault();
+        alert("Make sure to enter valid information for each field!");
+        //event.preventDefault();
         //IDK if I need the window. part  
         //do I need to do something else? event.preventDefault(); Or does that go in script.js?
     }
 
-    //do I need to declare list to be document.getElementById("faultyItems");?
+    //do I need to declare list to be document.getElementById("faultyItems"); here when doing so in script.js?
     let pilotStatus = document.getElementById("pilotStatus");
     let copilotStatus = document.getElementById("copilotStatus");
     let listVisibility = list;//document.getElementById("faultyItems")
@@ -80,6 +67,8 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     cargoStatus.innerHTML = "Cargo mass low enough for launch";
 
     //Shuttle Requirement Checks
+    //I think the text strings for all the status checks need to have revert options
+    //If user enters valid data, change HTML strings back after invalid submission
     if (fuelNum < 10000) {
         fuelStatus.innerHTML = "Fuel level too low for launch";
         launchStatus.innerHTML = "Shuttle Not Ready for Launch";
@@ -93,7 +82,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
         launchStatus.style.color = "red";
         listVisibility.style.visibility = "visible";
     }
-
+    //Account for empty strings? But that should be handled by validateInput above?
     if (typeof pilot === "string" && typeof copilot === "string" && fuelNum >= 10000 && cargoNum <= 10000) {
         launchStatus.innerHTML = "Shuttle is Ready for Launch";
         launchStatus.style.color = "green";
@@ -121,4 +110,4 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  module.exports.validateInput = validateInput;
  module.exports.formSubmission = formSubmission;
  module.exports.pickPlanet = pickPlanet; 
- module.exports.myFetch = myFetch;
+ module.exports.myFetch = myFetch;  
