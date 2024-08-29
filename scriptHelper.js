@@ -16,7 +16,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                    <img src="${imageUrl}">`
  }
  
- 
+
  function validateInput(testInput) {
     let input = testInput;
     let response = "";
@@ -40,54 +40,55 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
  //TODO Refactor formSubmission
  function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
+    const launchStatus = document.getElementById("launchStatus");
+    const pilotStatus = document.getElementById("pilotStatus");
+    const copilotStatus = document.getElementById("copilotStatus");
+    const fuelStatus = document.getElementById("fuelStatus");
+    const cargoStatus = document.getElementById("cargoStatus");
+    //Delete these?
+    //let fuelNum = Number(fuelLevel);
+    //let cargoNum = Number(cargoLevel);
+
+
     if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty") {
+        launchStatus.innerHTML = "Awaiting Information Before Launch";
         alert("All fields are required!");
-       
-        //do I need to do something else?
-        //Below might not be able to be an else if statement, or should be nested?
     } else if (validateInput(pilot) !== "Not a Number" || validateInput(copilot) !== "Not a Number" || validateInput(fuelLevel) !== "Is a Number" || validateInput(cargoLevel) !== "Is a Number") {
+        launchStatus.innerHTML = "Awaiting Information Before Launch";
         alert("Make sure to enter valid information for each field!");
-       
+    } else {
+        //Need to fix logic here - form submitted and shows these template literals when list is visible but they're empty
+        pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
+        copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
     }
-
-    //do I need to declare list to be document.getElementById("faultyItems"); here when doing so in script.js?
-    let pilotStatus = document.getElementById("pilotStatus");
-    let copilotStatus = document.getElementById("copilotStatus");
-    let listVisibility = list;//document.getElementById("faultyItems")
-    let launchStatus = document.getElementById("launchStatus");
-    let fuelNum = Number(fuelLevel);
-    let cargoNum = Number(cargoLevel);
-    let fuelStatus = document.getElementById("fuelStatus");
-    let cargoStatus = document.getElementById("cargoStatus");
-
-    //Ensures passing defaults - could be refactored to use "list" argument
-    //Need to prevent saying pilot/copilot reday if empty strings
-    pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
-    copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
-    fuelStatus.innerHTML = "Fuel level high enough for launch";
-    cargoStatus.innerHTML = "Cargo mass low enough for launch";
-
+    
     //Shuttle Requirement Checks
-    //I think the text strings for all the status checks need to have revert options
-    //If user enters valid data, change HTML strings back after invalid submission
-    if (fuelNum < 10000) {
+    if (fuelLevel >= 10000) {
+        fuelStatus.innerHTML = "Fuel level high enough for launch";
+    } else {
         fuelStatus.innerHTML = "Fuel level too low for launch";
-        launchStatus.innerHTML = "Shuttle Not Ready for Launch";
-        launchStatus.style.color = "red";
-        listVisibility.style.visibility = "visible";
     }
-        
-    if (cargoNum > 10000) {
+
+    if (cargoLevel <= 10000) {
+        cargoStatus.innerHTML = "Cargo mass low enough for launch";
+    } else {
         cargoStatus.innerHTML = "Cargo mass too heavy for launch";
+    }
+
+    if (fuelLevel < 10000 || cargoLevel > 10000) {
         launchStatus.innerHTML = "Shuttle Not Ready for Launch";
         launchStatus.style.color = "red";
-        listVisibility.style.visibility = "visible";
-    }
-    //Account for empty strings? But that should be handled by validateInput above?
-    if (typeof pilot === "string" && typeof copilot === "string" && fuelNum >= 10000 && cargoNum <= 10000) {
+        list.style.visibility = "visible";
+    } else if (validateInput(pilot) === "Not a Number" && validateInput(copilot) === "Not a Number" && fuelLevel >= 10000 && cargoLevel <= 10000) {
         launchStatus.innerHTML = "Shuttle is Ready for Launch";
         launchStatus.style.color = "green";
     }
+    //Account for empty strings? But that should be handled by validateInput above?
+    /*if (typeof pilot === "string" && typeof copilot === "string" && fuelLevel >= 10000 && cargoLevel <= 10000) {
+        launchStatus.innerHTML = "Shuttle is Ready for Launch";
+        launchStatus.style.color = "green";
+    }
+    */
 
  }
  
