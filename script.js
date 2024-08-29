@@ -22,7 +22,6 @@ window.addEventListener("load", function() {
     
     
     const launchForm = document.getElementById("launchForm");
-    //Possibly grab form by type rather than Id since only one form on page?
 
     launchForm.addEventListener("submit", function(event) {
 
